@@ -23,7 +23,7 @@ export default function Home() {
           adventures in Mauritius.
         </span>
 
-        <Button size="lg" asChild className="w-full max-w-[300px] mt-6">
+        <Button size="lg" asChild className="w-full max-w-[300px] mt-6 h-12">
           <Link href="/start">
             <span className="text-lg font-semibold uppercase">Get Started</span>
             <ChevronRightIcon className="w-6 h-6" />
