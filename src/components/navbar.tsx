@@ -1,12 +1,12 @@
-import { Hurricane } from 'next/font/google';
-const titleFont = Hurricane({
-  weight: "400",
-  subsets: ["latin"]
-})
+import { MenuIcon } from "lucide-react";
+import { Button } from "./ui/button";
+
 export function Navbar() {
   return (
     <div className="w-full py-2 text-right">
-      <span className={`text-2xl ${titleFont.className}`}>MMD</span>
+      <Button variant="outline" size="icon">
+        <MenuIcon className="h-5 w-5" />
+      </Button>
     </div>
   );
 }
