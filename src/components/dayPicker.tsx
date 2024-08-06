@@ -37,7 +37,7 @@ export function DayPicker({
         disabled={(date) =>
           date < dayjs(new Date()).subtract(1, "day").toDate()
         }
-        className="flex h-full w-full rounded-md border bg-white"
+        className="flex h-full rounded-md border bg-white"
         classNames={{
           months:
             "flex w-full flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 flex-1",
