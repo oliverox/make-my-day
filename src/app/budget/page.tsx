@@ -75,7 +75,7 @@ export default function BudgetPage() {
         </div>
       )}
       <Button className="mt-8 h-12" asChild>
-        <Link href="/budget">
+        <Link href="/your-day">
           <span className="text-lg">Next</span>
           <ChevronRightIcon className="h-5 w-5" />
         </Link>
