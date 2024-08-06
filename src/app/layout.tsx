@@ -30,7 +30,7 @@ export default function RootLayout({
       <body>
         <TRPCReactProvider>
           <main className="flex min-h-screen flex-col items-center bg-muted">
-            <div className="max-w-md w-full border-x px-4 bg-gradient-to-b from-[#f3fab3] to-[#a6def2]">
+            <div className="relative max-w-md w-full border-x px-4 bg-gradient-to-b from-[#f3fab3] to-[#a6def2]">
               <Navbar />
               {children}
             </div>

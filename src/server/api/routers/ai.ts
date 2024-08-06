@@ -7,31 +7,28 @@ export const aiRouter = createTRPCRouter({
   post: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(async ({ input }) => {
-      const model = openai.chat("gpt-4o-mini");
+      const model = openai.chat("gpt-4o");
       return generateObject({
         model,
         schema: z.object({
           itinerary: z.array(
             z.object({
+              location: z.string(),
               activity: z.string(),
-              time: z.string(),
-              details: z.string(),
+              start_time: z.string(),
+              end_time: z.string(),
+              description: z.string(),
+              cost_usd: z.string().optional(),
+              address: z.string().optional(),
+              tip: z.string().optional().nullable(),
+              unique_dish: z.string().optional().nullable(),
+              phone: z.string().optional().nullable()
             }),
           ),
         }),
         mode: "json",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You only return just the JSON with no additional description or context.",
-          },
-          {
-            role: "user",
-            content:
-              "A family of four, including two kids, want to visit the west coast of Mauritius. They want you to plan their day from morning till evening, including breakfast, lunch and dinner. They want to explore local delights and have ample time at the beach. Throw in some interesting activities you feel like recommending.",
-          },
-        ],
+        system: "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You only return just the JSON with no additional description or context.",
+        prompt: "I want a full day itinerary for a family of four, including two kids aged 4 and 8, to the west coast of Mauritius starting with breakfast at 9AM to the evening with dinner at 8PM. What makes this trip unique is that it should include local food delights and restaurant names and contact number, kid-friendly activities as well as ample time to rest, and finally unique spots to visits that are not so commonly known by the public. Keep the tone friendly and educational. Make sure the locations proposed exist and restaurants are in operation.",
       });
     }),
 
