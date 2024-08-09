@@ -23,8 +23,6 @@ const config = {
         "fixStyle": "inline-type-imports"
       }
     ],
-    "@typescript-eslint/no-empty-interface": "warn",
-    "@typescript-eslint/no-empty-object-type": "warn",
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {

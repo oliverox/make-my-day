@@ -4,8 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 import { type Metadata } from "next";
 import { clsx } from "clsx";
 
-import { TRPCReactProvider } from "~/trpc/react";
-import { Navbar } from '~/components/navbar';
+import { Navbar } from "~/components/navbar";
 
 export const metadata: Metadata = {
   title: "Make My Day",
@@ -18,7 +17,6 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -28,14 +26,12 @@ export default function RootLayout({
       className={clsx("font-sans antialiased", fontSans.variable)}
     >
       <body>
-        <TRPCReactProvider>
-          <main className="flex min-h-screen flex-col items-center bg-muted">
-            <div className="relative max-w-md w-full border-x px-4 bg-gradient-to-b from-[#f3fab3] to-[#a6def2]">
-              <Navbar />
-              {children}
-            </div>
-          </main>
-        </TRPCReactProvider>
+        <main className="flex min-h-screen flex-col items-center bg-muted">
+          <div className="relative w-full max-w-md border-x bg-gradient-to-b from-[#f3fab3] to-[#a6def2] px-4">
+            <Navbar />
+            {children}
+          </div>
+        </main>
       </body>
     </html>
   );

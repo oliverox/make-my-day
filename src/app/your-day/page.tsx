@@ -1,4 +1,3 @@
-"use client";
 import {
   Card,
   CardContent,
@@ -16,17 +15,33 @@ import {
   DollarSignIcon,
 } from "lucide-react";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
-import { api } from "~/trpc/react";
 
-export default function YourDayPage() {
-  const query = api.ai.post.useQuery({ text: "hello ai!" });
-  console.log("output:", query.data);
+export default async function YourDayPage() {
+  const resp = await fetch(`${process.env.BASE_URL}/api/ai`, {
+    method: 'POST'
+  });
+  console.log("resp=", resp);
+  const aiJson = await resp.json();
+  console.log("output:", aiJson);
   return (
     <UserComponentWrapper>
-      {query.isLoading && <Loader2 className="h-6 w-6" />}
-      {query.isSuccess && (
-        <div className="flex flex-col gap-2">
-          {query.data.object.itinerary.map((item, index) => {
+      <div className="flex flex-col gap-2">
+        {aiJson.itinerary.map(
+          (
+            item: {
+              location: string;
+              activity: string;
+              start_time: string;
+              end_time: string;
+              description: string;
+              cost_usd?: string;
+              address: string;
+              tip: string;
+              unique_dish: string | null;
+              phone?: string;
+            },
+            index: number,
+          ) => {
             return (
               <Card key={index}>
                 <CardHeader>
@@ -75,9 +90,9 @@ export default function YourDayPage() {
                 <CardFooter className="flex flex-col items-start"></CardFooter>
               </Card>
             );
-          })}
-        </div>
-      )}
+          },
+        )}
+      </div>
     </UserComponentWrapper>
   );
 }

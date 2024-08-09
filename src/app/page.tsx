@@ -1,4 +1,3 @@
-import { HydrateClient } from "~/trpc/server";
 import { Button } from "~/components/ui/button";
 import { ChevronRightIcon } from 'lucide-react';
 import { Hurricane } from 'next/font/google';
@@ -12,7 +11,6 @@ const titleFont = Hurricane({
 
 export default function Home() {
   return (
-    <HydrateClient>
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 text-center">
         <h1 className={clsx("text-6xl font-bold capitalize text-primary", titleFont.className)}>
           Make My Day
@@ -30,6 +28,5 @@ export default function Home() {
           </Link>
         </Button>
       </div>
-    </HydrateClient>
   );
 }
