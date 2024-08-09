@@ -1,4 +1,4 @@
-import { z } from "zod";
+import type { z } from "zod";
 import {
   Card,
   CardContent,
@@ -15,14 +15,15 @@ import {
   SparklesIcon,
   DollarSignIcon,
 } from "lucide-react";
-import { AiJson } from "~/app/definitions/types";
+import type { AiJson } from "~/app/definitions/schemas";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 export default async function YourDayPage() {
   const resp = await fetch(`${process.env.BASE_URL}/api/ai`, {
     method: "POST",
   });
-  const aiJson = (await resp.json()) as z.infer<typeof AiJson>;
+  type AiJsonType = z.infer<typeof AiJson>;
+  const aiJson = (await resp.json()) as AiJsonType;
   return (
     <UserComponentWrapper>
       <div className="flex flex-col gap-2">
