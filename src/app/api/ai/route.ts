@@ -2,7 +2,7 @@ import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 
-export async function POST({ req }: { req: Request}) {
+export async function POST(/*req: Request*/) {
   const model = openai.chat("gpt-4o");
   const aiOutput = await generateObject({
     model,
