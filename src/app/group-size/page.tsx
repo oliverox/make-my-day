@@ -5,8 +5,11 @@ import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 export default async function GroupPage() {
   const { userId } = auth();
+  if (!userId) {
+    throw "Unauthorized";
+  }
   const redis = Redis.fromEnv();
-  const defaultGroupSize = await redis.hget(`mmd.${userId}`, 'groupSize') as string;
+  const defaultGroupSize:string = (await redis.hget(`mmd.${userId}`, 'groupSize'))!;
 
   return (
     <UserComponentWrapper>

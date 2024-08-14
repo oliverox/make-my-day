@@ -6,7 +6,7 @@ import { UserComponentWrapper } from "~/components/userComponentWrapper";
 export default async function StartPage() {
   const { userId } = auth();
   const redis = Redis.fromEnv();
-  let selectedDate = await redis.hget(`mmd.${userId}`, 'selectedDate') as Date;
+  let selectedDate:Date = (await redis.hget(`mmd.${userId}`, 'selectedDate'))!;
   if (!selectedDate) {
     selectedDate = new Date();
   }
