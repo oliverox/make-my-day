@@ -16,7 +16,7 @@ export default function MakingPage() {
       console.log('redirecting to:', url)
       router.push(url);
     }, 1000)
-  }, [])
+  }, [router])
   return (
     <UserComponentWrapper>
       <div className="flex flex-1 flex-col gap-4 justify-center items-center">
