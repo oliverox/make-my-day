@@ -14,10 +14,9 @@ export function BudgetSetter({ defaultBudget }: { defaultBudget: string }) {
   );
 
   return (
-    <div>
+    <>
       <div className="mt-4 flex flex-col gap-2">
         <span>Do you want to set a day budget?</span>
-        <span>{budget}</span>
         <RadioGroup
           value={hasBudget ? "SET_BUDGET" : "NO_BUDGET"}
           className="mt-4 flex flex-row gap-8"
@@ -67,13 +66,14 @@ export function BudgetSetter({ defaultBudget }: { defaultBudget: string }) {
           saveToRedis({
             field: "budget",
             value: hasBudget ? `${budget}` : "0",
-            redirectUrl: "/making",
+            // redirectUrl: "/making",
+            redirectUrl: "/your-day",
           })
         }
       >
         <span className="text-lg">Next</span>
         <ChevronRightIcon className="h-5 w-5" />
       </Button>
-    </div>
+    </>
   );
 }

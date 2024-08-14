@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from 'react';
 import { Loader2Icon } from 'lucide-react';
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
