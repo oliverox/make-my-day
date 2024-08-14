@@ -1,31 +1,18 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import { Redis } from "@upstash/redis";
+import { auth } from '@clerk/nextjs/server';
 import { DayPicker } from "~/components/dayPicker";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
-export default function NewPage() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
-
-  useEffect(() => {
-    const selectedDateLS = window.localStorage.getItem("mmd.selectedDate");
-    if (typeof selectedDateLS === "string") {
-      setSelectedDate(new Date(selectedDateLS));
-    } else {
-      setSelectedDate(new Date());
-    }
-  }, []);
-
-  const onDateSelect = (date: Date | undefined) => {
-    if (date) {
-      localStorage.setItem("mmd.selectedDate", date.toString());
-      setSelectedDate(date);
-    }
-  };
-
+export default async function StartPage() {
+  const { userId } = auth();
+  const redis = Redis.fromEnv();
+  let selectedDate = await redis.hget(`mmd.${userId}`, 'selectedDate') as Date;
+  if (!selectedDate) {
+    selectedDate = new Date();
+  }
   return (
     <UserComponentWrapper>
-      <DayPicker onDateSelect={onDateSelect} selectedDate={selectedDate} />
+      <DayPicker selectedDateFromRedis={selectedDate} />
     </UserComponentWrapper>
   );
 }

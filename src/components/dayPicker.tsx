@@ -1,16 +1,20 @@
+"use client";
 import dayjs from "dayjs";
-import Link from "next/link";
+import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
 import { ChevronRightIcon } from "lucide-react";
+import { saveToRedis } from "~/app/actions/saveToRedis";
 
 export function DayPicker({
-  onDateSelect,
-  selectedDate,
+  selectedDateFromRedis,
 }: {
-  onDateSelect: (d: Date | undefined) => void;
-  selectedDate: Date | undefined;
+  selectedDateFromRedis: Date;
 }) {
+  const [selectedDate, setSelectedDate] = useState(
+    new Date(selectedDateFromRedis),
+  );
+
   return (
     <div className="mt-4 flex flex-col gap-2">
       <span>Choose a day to plan</span>
@@ -18,14 +22,16 @@ export function DayPicker({
         <Button
           className="flex-1"
           variant="outline"
-          onClick={() => onDateSelect(new Date())}
+          onClick={() => setSelectedDate(new Date())}
         >
           Today
         </Button>
         <Button
           className="flex-1"
           variant="outline"
-          onClick={() => onDateSelect(dayjs(new Date()).add(1, "day").toDate())}
+          onClick={() =>
+            setSelectedDate(dayjs(new Date()).add(1, "day").toDate())
+          }
         >
           Tomorrow
         </Button>
@@ -33,7 +39,7 @@ export function DayPicker({
       <Calendar
         mode="single"
         selected={selectedDate}
-        onSelect={onDateSelect}
+        onSelect={(date) => (date ? setSelectedDate(date) : null)}
         disabled={(date) =>
           date < dayjs(new Date()).subtract(1, "day").toDate()
         }
@@ -49,13 +55,20 @@ export function DayPicker({
         }}
       />
       {selectedDate && (
-        <Button className="mt-4 flex-1 h-12" asChild>
-          <Link href="/group-size">
-            <span className="text-lg">
-              {dayjs(selectedDate).format("ddd D MMM")}
-            </span>
-            <ChevronRightIcon className="h-5 w-5" />
-          </Link>
+        <Button
+          className="mt-4 h-12 flex-1"
+          onClick={() =>
+            saveToRedis({
+              field: "selectedDate",
+              value: selectedDate.toDateString(),
+              redirectUrl: "/group-size",
+            })
+          }
+        >
+          <span className="text-lg">
+            {dayjs(selectedDate).format("ddd D MMM")}
+          </span>
+          <ChevronRightIcon className="h-5 w-5" />
         </Button>
       )}
     </div>

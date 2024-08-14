@@ -16,24 +16,35 @@ import {
 } from "lucide-react";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
-import { AiJson } from '~/app/definitions/schemas';
+import { AiJson } from "~/app/definitions/schemas";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
-import type { z } from 'zod';
+import type { z } from "zod";
 
-export default async function YourDayPage() {
+export default async function YourDayPage({
+  searchParams,
+}: {
+  searchParams: {
+    date: string;
+  };
+}) {
   const model = openai.chat("gpt-4o");
+  const { date } = searchParams;
   const aiOutput = await generateObject({
     model,
     schema: AiJson,
     mode: "json",
-    system: "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.",
-    prompt: "I want a full day itinerary for a family of four, including two kids aged 4 and 8, to the north of Mauritius starting with breakfast at 9AM to the evening with dinner at 8PM. What makes this trip unique is that it should include local food delights and restaurant names and contact number, kid-friendly activities as well as ample time to rest, and finally unique spots to visits that are not so commonly known by the public. Keep the tone friendly and educational. Make sure the locations proposed exist and restaurants are in operation.",
+    system:
+      "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.",
+    prompt: `I want a full day itinerary for a family of four, including two kids aged 4 and 8, to the north of Mauritius on ${date} starting with breakfast at 9AM to the evening with dinner at 8PM. What makes this trip unique is that it should include local food delights and restaurant names and contact number, kid-friendly activities as well as ample time to rest, and finally unique spots to visits that are not so commonly known by the public. Keep the tone friendly and educational. Make sure the locations proposed exist and restaurants are in operation.`,
   });
-  const aiJson = await aiOutput.toJsonResponse().json() as z.infer<typeof AiJson>;
+  const aiJson = (await aiOutput.toJsonResponse().json()) as z.infer<
+    typeof AiJson
+  >;
 
   return (
     <UserComponentWrapper>
       <div className="flex flex-col gap-2">
+        <span>Trip on {date}</span>
         {aiJson.itinerary.map((item, index: number) => {
           return (
             <Card key={index}>
@@ -44,10 +55,10 @@ export default async function YourDayPage() {
                 <CardDescription className="flex flex-col gap-1">
                   <span>{item.location}</span>
                   {item.cost_usd !== "0" ? (
-                    <div className="flex items-center">
+                    <span className="flex items-center">
                       <DollarSignIcon className="h-4 w-4" />
                       {item.cost_usd}
-                    </div>
+                    </span>
                   ) : (
                     ""
                   )}

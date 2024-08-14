@@ -1,12 +1,15 @@
 import { MenuIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export function Navbar() {
   return (
-    <div className="w-full h-12 py-2 text-right absolute top-0 right-4">
-      <Button variant="ghost" size="icon" className="hover:bg-primary hover:text-primary-foreground">
+    <div className="absolute right-0 top-2 px-2 text-right">
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+      <SignedOut>
         <MenuIcon className="h-5 w-5" />
-      </Button>
+      </SignedOut>
     </div>
   );
 }

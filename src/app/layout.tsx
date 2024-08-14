@@ -1,10 +1,17 @@
 import "~/styles/globals.css";
 
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+} from "@clerk/nextjs";
 import { Inter as FontSans } from "next/font/google";
 import { type Metadata } from "next";
 import { clsx } from "clsx";
 
 import { Navbar } from "~/components/navbar";
+import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 export const metadata: Metadata = {
   title: "Make My Day",
@@ -21,18 +28,25 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={clsx("font-sans antialiased", fontSans.variable)}
-    >
-      <body>
-        <main className="flex min-h-screen flex-col items-center bg-muted">
-          <div className="relative w-full max-w-md border-x bg-gradient-to-b from-[#f3fab3] to-[#a6def2] px-4">
-            <Navbar />
-            {children}
-          </div>
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        className={clsx("font-sans antialiased", fontSans.variable)}
+      >
+        <body>
+          <main className="flex min-h-screen flex-col items-center bg-muted">
+            <div className="relative w-full max-w-md border-x bg-gradient-to-b from-[#f3fab3] to-[#a6def2] px-4">
+              <Navbar />
+              <SignedOut>
+                <UserComponentWrapper>
+                  <SignInButton />
+                </UserComponentWrapper>
+              </SignedOut>
+              <SignedIn>{children}</SignedIn>
+            </div>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
