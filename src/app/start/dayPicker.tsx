@@ -69,7 +69,7 @@ export function DayPicker({
           </span>
         </div>
         <Slider
-          defaultValue={[startEndTime[0], startEndTime[1]]}
+          defaultValue={[startEndTime[0]!, startEndTime[1]!]}
           min={6}
           max={24}
           step={1}
