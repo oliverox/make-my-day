@@ -15,8 +15,18 @@ export async function GET(request: NextRequest) {
   const startTime = searchParams.get("start_time") ?? "9AM";
   const endTime = searchParams.get("end_time") ?? "10PM";
   const activities = searchParams.getAll('activities').length == 0 ? ['local food delights', 'beach'] : searchParams.getAll('activities');
-
   const [numAdults, numKids] = groupSize.split(".");
+
+  console.log({
+    date,
+    region,
+    groupSize,
+    startTime,
+    endTime,
+    activities,
+    numAdults,
+    numKids
+  });
 
   const model = openai.chat("gpt-4o");
   const system = "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.";

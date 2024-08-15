@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { auth } from '@clerk/nextjs/server';
-import { DayPicker } from "~/components/dayPicker";
+import { DayPicker } from "./dayPicker";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 export default async function StartPage() {

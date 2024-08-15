@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { auth } from '@clerk/nextjs/server';
-import { GroupSizePicker } from '~/components/groupSizePicker';
+import { GroupSizePicker } from './groupSizePicker';
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 export default async function GroupPage() {

@@ -21,7 +21,7 @@ export function GroupSizePicker({
   return (
     <div className="mt-4 flex flex-col gap-2">
       <div className="flex flex-col gap-4">
-        <span className="font-semibold">Who&apos;s in this plan?</span>
+        <span className="font-semibold">Who&apos;s joining you?</span>
         <ToggleGroup
           type="single"
           size="lg"

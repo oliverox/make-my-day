@@ -17,7 +17,7 @@ export function DayPicker({
 
   return (
     <div className="mt-4 flex flex-col gap-2">
-      <span>Choose a day to plan</span>
+      <span className="font-semibold">Pick a day to plan</span>
       <div className="flex gap-2">
         <Button
           className="flex-1"
