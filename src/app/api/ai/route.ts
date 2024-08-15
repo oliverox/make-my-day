@@ -1,4 +1,4 @@
-export const runtime = "nodejs";
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
@@ -41,5 +41,17 @@ export async function GET(request: NextRequest) {
     system,
     prompt,
   });
-  return aiOutput.toJsonResponse();
+  // const encoder = new TextEncoder();
+  const customReadable = new ReadableStream({
+    start(controller) {
+      // Start encoding 'Basic Streaming Test',
+      // and add the resulting stream to the queue
+      controller.enqueue(aiOutput.toJsonResponse());
+      // Prevent anything else being added to the stream
+      controller.close();
+    },
+  });
+  return new Response(customReadable, {
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  });
 }
