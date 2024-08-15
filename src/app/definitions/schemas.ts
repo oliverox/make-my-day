@@ -12,7 +12,6 @@ export const AiJson = z.object({
       address: z.string().optional(),
       tip: z.string().optional().nullable(),
       unique_dish: z.string().optional().nullable(),
-      phone: z.string().optional().nullable()
     }),
   ),
 })
