@@ -15,10 +15,24 @@ import {
 import { type AiJson } from "~/app/definitions/schemas";
 import type { z } from "zod";
 
-export async function Itinerary({ date }: { date: string }) {
-  const json = (await fetch(`${process.env.BASE_URL}/api/ai?date=${date}`)).json();
-  const aiJson = await json as z.infer<typeof AiJson>;
-  console.log('aiJson=', aiJson);
+export async function Itinerary({
+  date,
+  startTime,
+  endTime,
+  groupSize,
+}: {
+  date: string;
+  startTime: string;
+  endTime: string;
+  groupSize: string;
+}) {
+  const json = (
+    await fetch(
+      `${process.env.BASE_URL}/api/ai?date=${date}&start_time=${startTime}:00&end_time=${endTime}:00&group_size=${groupSize}`,
+    )
+  ).json();
+  const aiJson = (await json) as z.infer<typeof AiJson>;
+  console.log("aiJson=", aiJson);
   return (
     <div className="flex flex-col gap-4">
       {aiJson.itinerary.map((item, index: number) => {

@@ -9,6 +9,7 @@ import { AiJson } from "~/app/definitions/schemas";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
+  console.log('params:', searchParams.toString());
   const date = searchParams.get("date") ?? new Date().toDateString();
   const region = searchParams.get("region") ?? "west coast";
   const groupSize = searchParams.get("group_size") ?? "1.0";
