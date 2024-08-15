@@ -1,8 +1,6 @@
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
-export const config = {
-  maxDuration: 60,
-};
+export const maxDuration = 60;
 
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
