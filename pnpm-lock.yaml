@@ -47,6 +47,9 @@ importers:
       '@upstash/redis':
         specifier: ^1.34.0
         version: 1.34.0
+      '@vercel/functions':
+        specifier: ^1.4.0
+        version: 1.4.0
       ai:
         specifier: ^3.3.4
         version: 3.3.4(react@18.3.1)(sswr@2.1.0(svelte@4.2.18))(svelte@4.2.18)(vue@3.4.37(typescript@5.5.4))(zod@3.23.8)
@@ -1207,6 +1210,15 @@ packages:
 
   '@upstash/redis@1.34.0':
     resolution: {integrity: sha512-TrXNoJLkysIl8SBc4u9bNnyoFYoILpCcFJcLyWCccb/QSUmaVKdvY0m5diZqc3btExsapcMbaw/s/wh9Sf1pJw==}
+
+  '@vercel/functions@1.4.0':
+    resolution: {integrity: sha512-Ln6SpIkms1UJg306X2kbEMyG9ol+mjDr2xx389cvsBxgFyFMI9Bm+LYOG4N3TSik4FI59MECyyc4oz7AIAYmqQ==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      '@aws-sdk/credential-provider-web-identity': '*'
+    peerDependenciesMeta:
+      '@aws-sdk/credential-provider-web-identity':
+        optional: true
 
   '@vue/compiler-core@3.4.37':
     resolution: {integrity: sha512-ZDDT/KiLKuCRXyzWecNzC5vTcubGz4LECAtfGPENpo0nrmqJHwuWtRLxk/Sb9RAKtR9iFflFycbkjkY+W/PZUQ==}
@@ -4009,6 +4021,8 @@ snapshots:
   '@upstash/redis@1.34.0':
     dependencies:
       crypto-js: 4.2.0
+
+  '@vercel/functions@1.4.0': {}
 
   '@vue/compiler-core@3.4.37':
     dependencies:
