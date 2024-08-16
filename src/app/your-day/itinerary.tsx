@@ -21,7 +21,6 @@ import { getItinerary } from "~/app/actions/getItinerary";
 import type { ActivitySchema, ItinerarySchema } from "~/app/definitions/schemas";
 
 export const maxDuration = 60;
-
 export const runtime = 'edge';
 
 export function Itinerary({
