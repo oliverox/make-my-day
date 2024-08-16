@@ -7,9 +7,6 @@ export function Navbar() {
       <SignedIn>
         <UserButton />
       </SignedIn>
-      <SignedOut>
-        <MenuIcon className="h-5 w-5" />
-      </SignedOut>
     </div>
   );
 }

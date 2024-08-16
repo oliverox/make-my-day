@@ -12,6 +12,7 @@ import { clsx } from "clsx";
 
 import { Navbar } from "~/components/navbar";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
+import { Button } from "~/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Make My Day",
@@ -37,12 +38,7 @@ export default function RootLayout({
           <main className="flex min-h-screen flex-col items-center bg-muted">
             <div className="relative w-full max-w-md border-x bg-gradient-to-b from-[#f3fab3] to-[#a6def2] px-4">
               <Navbar />
-              <SignedOut>
-                <UserComponentWrapper>
-                  <SignInButton />
-                </UserComponentWrapper>
-              </SignedOut>
-              <SignedIn>{children}</SignedIn>
+              {children}
             </div>
           </main>
         </body>
