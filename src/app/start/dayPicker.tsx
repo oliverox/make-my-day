@@ -16,6 +16,7 @@ export function DayPicker({
   const [selectedDate, setSelectedDate] = useState(
     new Date(selectedDateFromRedis),
   );
+  const [redirecting, setRedirecting] = useState(false);
   return (
     <div className="mt-4 flex flex-col gap-5">
       <div className="flex flex-col gap-2">
@@ -57,15 +58,15 @@ export function DayPicker({
           }}
         />
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 px-2">
         <div className="flex flex-row items-center justify-between">
           <span>
-            Start time -{" "}
+            Start time<br />
             <strong>{dayjs().hour(startEndTime[0]!).format("HH")}:00</strong>
           </span>
-          <span>
-            <strong>{dayjs().hour(startEndTime[1]!).format("HH")}:00</strong> -
-            End time
+          <span className="text-right">
+            End time<br />
+            <strong>{dayjs().hour(startEndTime[1]!).format("HH")}:00</strong>
           </span>
         </div>
         <Slider
@@ -79,9 +80,10 @@ export function DayPicker({
       </div>
       {selectedDate && (
         <Button
+          disabled={redirecting}
           className="mt-4 h-12 flex-1"
           onClick={async () => {
-            console.log('startEndTime=', startEndTime, `${startEndTime[0]}.${startEndTime[1]}`);
+            setRedirecting(true);
             await saveToRedis({
               field: "startEndTime",
               value: `${startEndTime[0]}_${startEndTime[1]}`,
@@ -93,7 +95,7 @@ export function DayPicker({
             });
           }}
         >
-          <span className="text-lg">
+          <span className="text-lg uppercase">
             {dayjs(selectedDate).format("ddd D MMM")}
           </span>
           <ChevronRightIcon className="h-5 w-5" />

@@ -37,7 +37,7 @@ export default function Home() {
       </SignedOut>
 
       <SignedIn>
-        <Button size="lg" asChild className="mt-6 h-12 w-full max-w-[300px]">
+        <Button size="lg" asChild className="mt-6 h-12 w-full">
           <Link href="/start">
             <span className="text-lg font-semibold uppercase">Get Started</span>
             <ChevronRightIcon className="h-6 w-6" />

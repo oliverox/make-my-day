@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
@@ -14,6 +15,7 @@ export function BudgetSetter({ defaultBudget }: { defaultBudget: string }) {
   const [budget, setBudget] = useState(
     isNaN(parseInt(defaultBudget)) ? 0 : parseInt(defaultBudget),
   );
+  const [redirecting, setRedirecting] = useState(false);
 
   return (
     <>
@@ -63,16 +65,18 @@ export function BudgetSetter({ defaultBudget }: { defaultBudget: string }) {
         </div>
       )}
       <Button
+        disabled={redirecting}
         className="mt-8 h-12"
-        onClick={() =>
-          saveToRedis({
+        onClick={async () => {
+          setRedirecting(true);
+          await saveToRedis({
             field: "budget",
             value: hasBudget ? `${budget}` : "0",
             redirectUrl: "/your-day",
-          })
-        }
+          });
+        }}
       >
-        <span className="text-lg">Next</span>
+        <span className="text-lg uppercase">Next</span>
         <ChevronRightIcon className="h-5 w-5" />
       </Button>
     </>
