@@ -1,5 +1,4 @@
-import { MenuIcon } from "lucide-react";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export function Navbar() {
   return (

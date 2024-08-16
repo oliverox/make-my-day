@@ -1,18 +1,11 @@
 import "~/styles/globals.css";
 
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Inter as FontSans } from "next/font/google";
 import { type Metadata } from "next";
 import { clsx } from "clsx";
 
 import { Navbar } from "~/components/navbar";
-import { UserComponentWrapper } from "~/components/userComponentWrapper";
-import { Button } from "~/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Make My Day",
