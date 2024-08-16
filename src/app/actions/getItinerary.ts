@@ -1,7 +1,8 @@
 "use server";
 
-import { generateObject } from "ai";
+import { streamObject } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { createStreamableValue } from "ai/rsc";
 import { ItinerarySchema } from "~/app/definitions/schemas";
 
 export async function getItinerary({
@@ -20,6 +21,7 @@ export async function getItinerary({
   activities?: string[];
 }) {
   "use server";
+  const stream = createStreamableValue();
   console.log("params received:", {
     date,
     region,
@@ -29,19 +31,22 @@ export async function getItinerary({
     activities,
   });
   const [numAdults, numKids] = groupSize.split("_");
-  const model = openai.chat("gpt-4o");
-  const system =
-    "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.";
-  const prompt = `I want a full day itinerary for ${numAdults} adults ${numKids !== "0" ? `and ${numKids} kids` : "and no kids"}, to the ${region} of Mauritius on ${date} starting at ${startTime} up to ${endTime}. What makes this trip unique is that it should include the following activities: ${activities.join(", ")}. Make sure to add unique spots to visits that are not so commonly known by the public. Keep the tone friendly. Make sure the locations proposed exist and restaurants are in operation.`;
-  console.log("prompt:", prompt);
 
-  const output = await generateObject({
-    model,
-    schema: ItinerarySchema,
-    mode: "json",
-    system,
-    prompt,
-  });
+  (async () => {
+    const { partialObjectStream } = await streamObject({
+      model: openai.chat("gpt-4o"),
+      system:
+        "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.",
+      prompt: `I want a full day itinerary for ${numAdults} adults ${numKids !== "0" ? `and ${numKids} kids` : "and no kids"}, to the ${region} of Mauritius on ${date} starting at ${startTime} up to ${endTime}. What makes this trip unique is that it should include the following activities: ${activities.join(", ")}. Make sure to add unique spots to visits that are not so commonly known by the public. Keep the tone friendly. Make sure the locations proposed exist and restaurants are in operation.`,
+      schema: ItinerarySchema,
+    });
 
-  return { itineraryJson: JSON.stringify(output.object.itinerary) };
+    for await (const partialObject of partialObjectStream) {
+      stream.update(partialObject);
+    }
+
+    stream.done();
+  })();
+
+  return { object: stream.value };
 }

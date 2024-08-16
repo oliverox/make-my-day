@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { getItinerary } from "~/app/actions/getItinerary";
 import {
   Card,
   CardContent,
@@ -16,8 +15,10 @@ import {
   DollarSignIcon,
 } from "lucide-react";
 import type { z } from "zod";
-import type { ActivitySchema } from "~/app/definitions/schemas";
+import { readStreamableValue } from 'ai/rsc';
 import { Button } from "~/components/ui/button";
+import { getItinerary } from "~/app/actions/getItinerary";
+import type { ActivitySchema } from "~/app/definitions/schemas";
 
 export const maxDuration = 60;
 
@@ -32,28 +33,33 @@ export function Itinerary({
   endTime: string;
   groupSize: string;
 }) {
-  const [itinerary, setItinerary] = useState<string>("");
+  const [itinerary, setItinerary] = useState<string | undefined>();
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-4">
-      {itinerary.length === 0 && (
+    <div className="flex flex-1 flex-col items-center justify-start gap-4">
+      {!itinerary && (
         <Button
           size="lg"
           className="w-full uppercase"
           onClick={async () => {
-            const { itineraryJson } = await getItinerary({
+            const { object } = await getItinerary({
               date,
               startTime,
               endTime,
               groupSize,
             });
-            setItinerary(itineraryJson);
-            console.log('itineraryJson=', itineraryJson);
+            for await (const partialObject of readStreamableValue(object)) {
+              if (partialObject) {
+                console.log('partialObject:', partialObject);
+                setItinerary(JSON.stringify(partialObject.itinerary))
+              }
+            }
+            console.log('itinerary=', itinerary);
           }}
         >
           Make My Day
         </Button>
       )}
-      {itinerary.length > 0 &&
+      {itinerary && itinerary.length > 0 &&
         (JSON.parse(itinerary) as z.infer<typeof ActivitySchema>[]).map(
           (item, index: number) => {
             return (
