@@ -1,9 +1,7 @@
 import { Redis } from "@upstash/redis";
-import Loading from "./loading";
-import { UserComponentWrapper } from "~/components/userComponentWrapper";
-import { Suspense } from "react";
 import { Itinerary } from "./itinerary";
 import { auth } from "@clerk/nextjs/server";
+import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 export default async function YourDayPage() {
   const { userId } = auth();
@@ -21,16 +19,12 @@ export default async function YourDayPage() {
 
   return (
     <UserComponentWrapper>
-      <div className="flex flex-col gap-2">
-        <Suspense fallback={<Loading />}>
-          <Itinerary
-            date={selectedDate}
-            startTime={startTime!}
-            endTime={endTime!}
-            groupSize={groupSize}
-          />
-        </Suspense>
-      </div>
+      <Itinerary
+        date={selectedDate}
+        startTime={startTime!}
+        endTime={endTime!}
+        groupSize={groupSize}
+      />
     </UserComponentWrapper>
   );
 }

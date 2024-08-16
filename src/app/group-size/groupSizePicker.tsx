@@ -88,7 +88,7 @@ export function GroupSizePicker({
           onClick={() =>
             saveToRedis({
               field: "groupSize",
-              value: `${numAdults}.${numKids}`,
+              value: `${numAdults}_${numKids}`,
               redirectUrl: "/budget",
             })
           }
