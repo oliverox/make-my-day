@@ -32,7 +32,7 @@ export async function getItinerary({
   });
   const [numAdults, numKids] = groupSize.split("_");
 
-  (async () => {
+  void (async () => {
     const { partialObjectStream } = await streamObject({
       model: openai.chat("gpt-4o"),
       system:

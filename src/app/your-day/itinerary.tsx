@@ -15,10 +15,10 @@ import {
   DollarSignIcon,
 } from "lucide-react";
 import type { z } from "zod";
-import { readStreamableValue } from 'ai/rsc';
+import { readStreamableValue } from "ai/rsc";
 import { Button } from "~/components/ui/button";
 import { getItinerary } from "~/app/actions/getItinerary";
-import type { ActivitySchema } from "~/app/definitions/schemas";
+import type { ActivitySchema, ItinerarySchema } from "~/app/definitions/schemas";
 
 export const maxDuration = 60;
 
@@ -47,19 +47,22 @@ export function Itinerary({
               endTime,
               groupSize,
             });
-            for await (const partialObject of readStreamableValue(object)) {
+            for await (const partialObject of readStreamableValue<
+              z.infer<typeof ItinerarySchema>
+            >(object)) {
               if (partialObject) {
-                console.log('partialObject:', partialObject);
-                setItinerary(JSON.stringify(partialObject.itinerary))
+                console.log("partialObject:", partialObject);
+                setItinerary(JSON.stringify(partialObject.itinerary));
               }
             }
-            console.log('itinerary=', itinerary);
+            console.log("itinerary=", itinerary);
           }}
         >
           Make My Day
         </Button>
       )}
-      {itinerary && itinerary.length > 0 &&
+      {itinerary &&
+        itinerary.length > 0 &&
         (JSON.parse(itinerary) as z.infer<typeof ActivitySchema>[]).map(
           (item, index: number) => {
             return (
