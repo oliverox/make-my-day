@@ -11,6 +11,7 @@ export async function getItinerary({
   startTime = "9AM",
   endTime = "10PM",
   groupSize = "1_0",
+  budget = null,
   activities = ["local food delights", "beach"],
 }: {
   date: string | null;
@@ -18,6 +19,7 @@ export async function getItinerary({
   startTime: string | null;
   endTime: string | null;
   groupSize: string | null;
+  budget: string | null;
   activities: string[] | null;
 }) {
   "use server";
@@ -25,6 +27,7 @@ export async function getItinerary({
   console.log("params received:", {
     date,
     region,
+    budget,
     startTime,
     endTime,
     groupSize,
@@ -33,13 +36,16 @@ export async function getItinerary({
   const [numAdults, numKids] = groupSize ? groupSize.split("_") : ["1", "0"];
   const allRegions = region ? region.split('_').join(', ') : "local food delights";
   const system =
-    "You are a master itinerary planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.";
-  const prompt = `I want a full day itinerary for ${numAdults} adults ${numKids !== "0" ? `and ${numKids} kids` : "and no kids"}, to ${allRegions} of Mauritius on ${date} starting at ${startTime} up to ${endTime}. What makes this trip unique is that it should include the following activities: ${activities ? activities.join(", ") : "local delights"}. Make sure to add unique spots to visits that are not so commonly known by the public. Keep the tone friendly. Make sure the locations proposed exist and restaurants are in operation.`;
+    "You are a master day planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.";
+  const prompt = `Create a full-day itinerary for ${numAdults} adults ${numKids !== "0" ? `and ${numKids} kids` : ''} exploring the ${allRegions} of Mauritius on ${date} from ${startTime}:00 to ${endTime}:00. The itinerary should feature unique and lesser-known spots, focusing on the following activities: ${activities ? activities.join(", ") : "local food delights"} and authentic experiences. Please ensure that all suggested locations and restaurants are operational and respect their opening and closing hours ${budget ? ` and stay within a total budget of USD ${budget} for the entire day` : ''}. Include hidden gems that are not commonly frequented by tourists. Keep the tone friendly and engaging.`
   
   console.log(prompt);
 
   void (async () => {
     const { partialObjectStream } = await streamObject({
+      // model: openai.chat("gpt-4o-2024-08-06", {
+      //   structuredOutputs: true,
+      // }),
       model: openai.chat("gpt-4o"),
       system,
       prompt,
@@ -49,7 +55,7 @@ export async function getItinerary({
     for await (const partialObject of partialObjectStream) {
       stream.update(partialObject);
     }
-    stream.done();
+    stream.done(0);
   })();
 
   return { object: stream.value };

@@ -24,12 +24,15 @@ export default async function YourDayPage() {
     redisKey,
     "groupSize",
   );
-  const [selectedDate, startEndTime, region, groupSize] = await Promise.all([
-    getSelectedDate,
-    getStartEndTime,
-    getRegion,
-    getGroupSize,
-  ]);
+  const getBudget: Promise<string | null> = redis.hget(redisKey, "budget");
+  const [selectedDate, startEndTime, region, groupSize, budget] =
+    await Promise.all([
+      getSelectedDate,
+      getStartEndTime,
+      getRegion,
+      getGroupSize,
+      getBudget,
+    ]);
   const [startTime, endTime] = startEndTime
     ? startEndTime.split("_")
     : ["09:00", "21:00"];
@@ -43,6 +46,7 @@ export default async function YourDayPage() {
         groupSize={groupSize}
         region={region}
         activities={null}
+        budget={budget}
       />
     </UserComponentWrapper>
   );

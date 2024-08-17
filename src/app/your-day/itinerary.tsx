@@ -10,6 +10,8 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import {
+  MailIcon,
+  HouseIcon,
   MapPinIcon,
   UtensilsIcon,
   SparklesIcon,
@@ -23,6 +25,7 @@ import type {
   ActivitySchema,
   ItinerarySchema,
 } from "~/app/definitions/schemas";
+import Link from "next/link";
 
 export const maxDuration = 60;
 export const runtime = "edge";
@@ -33,7 +36,8 @@ export function Itinerary({
   endTime,
   groupSize,
   region,
-  activities
+  activities,
+  budget,
 }: {
   date: string | null;
   startTime: string | null;
@@ -41,6 +45,7 @@ export function Itinerary({
   groupSize: string | null;
   region: string | null;
   activities: string[] | null;
+  budget: string | null;
 }) {
   const [itinerary, setItinerary] = useState<string | undefined>();
   const [streaming, setStreaming] = useState(false);
@@ -59,13 +64,18 @@ export function Itinerary({
               endTime,
               groupSize,
               region,
-              activities
+              activities,
+              budget,
             });
             for await (const partialObject of readStreamableValue<
               z.infer<typeof ItinerarySchema>
             >(object)) {
+              console.log("partialObject:", partialObject);
               if (partialObject) {
                 setItinerary(JSON.stringify(partialObject.itinerary));
+              } else {
+                console.log("set streaming to false");
+                setStreaming(false);
               }
             }
           }}
@@ -85,26 +95,30 @@ export function Itinerary({
                   </CardTitle>
                   <CardDescription className="flex flex-col gap-1">
                     <span>{item.location}</span>
-                    {item.cost_usd && item.cost_usd !== "0" ? (
+                    {item.cost_usd && item.cost_usd != "0" ? (
                       <span className="flex items-center">
                         <DollarSignIcon className="h-4 w-4" />
                         {item.cost_usd}
                       </span>
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2">
                   <p>{item.description}</p>
-                  <div className="flex items-center gap-2">
-                    <MapPinIcon className="h-4 w-4 text-muted-foreground" />
-                    <span>{item.address}</span>
-                  </div>
-                  {item.unique_dish && item.unique_dish.length > 0 && (
-                    <div className="flex items-center gap-2">
-                      <UtensilsIcon className="h-4 w-4 text-muted-foreground" />
-                      <span>{item.unique_dish}</span>
+                  {item.address && (
+                    <div className="flex gap-2">
+                      <div className="pt-1">
+                        <MapPinIcon className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                      <span>{item.address}</span>
+                    </div>
+                  )}
+                  {item.unique_dish && (
+                    <div className="flex gap-2">
+                      <div className="pt-1">
+                        <UtensilsIcon className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                      <span className="w-fit">{item.unique_dish}</span>
                     </div>
                   )}
                   {item.tip && (
@@ -112,7 +126,7 @@ export function Itinerary({
                       <div className="pt-1">
                         <SparklesIcon className="h-4 w-4 text-muted-foreground" />
                       </div>
-                      <span>{item.tip}</span>
+                      <span className="w-fit">{item.tip}</span>
                     </div>
                   )}
                 </CardContent>
@@ -121,6 +135,26 @@ export function Itinerary({
             );
           },
         )}
+      {itinerary && itinerary.length > 0 && !streaming && (
+        <div className="flex flex-col gap-2 w-full">
+          <Button size="lg" className="w-full items-center gap-2 uppercase">
+            <MailIcon className="h-5 w-5" />
+            Email Itinerary
+          </Button>
+
+          <Button
+            asChild
+            size="lg"
+            variant="secondary"
+            className="w-full items-center gap-2 uppercase"
+          >
+            <Link href="/">
+              <HouseIcon className="h-5 w-5" />
+              Back to Home
+            </Link>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
