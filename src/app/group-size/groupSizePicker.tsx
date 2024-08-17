@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
-import { ChevronRightIcon } from "lucide-react";
+import { ArrowBigRightIcon } from "lucide-react";
 import { saveToRedis } from "~/app/actions/saveToRedis";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 
@@ -22,7 +22,7 @@ export function GroupSizePicker({
   return (
     <div className="mt-4 flex flex-col gap-2">
       <div className="flex flex-col gap-4">
-        <span className="font-semibold">Who&apos;s joining you?</span>
+        <span className="text-center">Who&apos;s joining you?</span>
         <ToggleGroup
           type="single"
           size="lg"
@@ -97,7 +97,7 @@ export function GroupSizePicker({
           }}
         >
           <span className="text-lg uppercase">Next</span>
-          <ChevronRightIcon className="h-5 w-5" />
+          <ArrowBigRightIcon className="h-5 w-5" />
         </Button>
       )}
     </div>

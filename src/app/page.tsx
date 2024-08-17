@@ -1,5 +1,5 @@
 import { Button } from "~/components/ui/button";
-import { ChevronRightIcon } from "lucide-react";
+import { ArrowBigRightIcon } from "lucide-react";
 import { Hurricane } from "next/font/google";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import Link from "next/link";
@@ -40,7 +40,7 @@ export default function Home() {
         <Button size="lg" asChild className="mt-6 w-full">
           <Link href="/start">
             <span className="text-lg uppercase">Get Started</span>
-            <ChevronRightIcon className="h-6 w-6" />
+            <ArrowBigRightIcon className="h-6 w-6" />
           </Link>
         </Button>
       </SignedIn>

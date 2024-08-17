@@ -3,9 +3,10 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
-import { ChevronRightIcon } from "lucide-react";
+import { ArrowBigLeftIcon, ArrowBigRightIcon } from "lucide-react";
 import { Slider } from "~/components/ui/slider";
 import { saveToRedis } from "~/app/actions/saveToRedis";
+import Link from "next/link";
 
 export function DayPicker({
   selectedDateFromRedis,
@@ -20,7 +21,7 @@ export function DayPicker({
   return (
     <div className="mt-4 flex flex-col gap-5">
       <div className="flex flex-col gap-2">
-        <span className="font-semibold">Pick a day to plan</span>
+        <span className="text-center">Pick a day to plan.</span>
         <div className="flex gap-3">
           <Button
             className="flex-1"
@@ -61,11 +62,13 @@ export function DayPicker({
       <div className="flex flex-col gap-3 px-2">
         <div className="flex flex-row items-center justify-between">
           <span>
-            Start time<br />
+            Start time
+            <br />
             <strong>{dayjs().hour(startEndTime[0]!).format("HH")}:00</strong>
           </span>
           <span className="text-right">
-            End time<br />
+            End time
+            <br />
             <strong>{dayjs().hour(startEndTime[1]!).format("HH")}:00</strong>
           </span>
         </div>
@@ -79,27 +82,29 @@ export function DayPicker({
         />
       </div>
       {selectedDate && (
-        <Button
-          disabled={redirecting}
-          className="mt-4 h-12 flex-1"
-          onClick={async () => {
-            setRedirecting(true);
-            await saveToRedis({
-              field: "startEndTime",
-              value: `${startEndTime[0]}_${startEndTime[1]}`,
-            });
-            await saveToRedis({
-              field: "selectedDate",
-              value: selectedDate.toDateString(),
-              redirectUrl: "/region",
-            });
-          }}
-        >
-          <span className="text-lg uppercase">
-            {dayjs(selectedDate).format("ddd D MMM")}
-          </span>
-          <ChevronRightIcon className="h-5 w-5" />
-        </Button>
+        <div className="flex w-full flex-col gap-2">
+          <Button
+            disabled={redirecting}
+            className="mt-4 h-12 flex-1"
+            onClick={async () => {
+              setRedirecting(true);
+              await saveToRedis({
+                field: "startEndTime",
+                value: `${startEndTime[0]}_${startEndTime[1]}`,
+              });
+              await saveToRedis({
+                field: "selectedDate",
+                value: selectedDate.toDateString(),
+                redirectUrl: "/region",
+              });
+            }}
+          >
+            <span className="text-lg uppercase">
+              {dayjs(selectedDate).format("ddd D MMM")}
+            </span>
+            <ArrowBigRightIcon className="h-5 w-5" />
+          </Button>
+        </div>
       )}
     </div>
   );

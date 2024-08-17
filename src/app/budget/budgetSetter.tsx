@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
-import { ChevronRightIcon } from "lucide-react";
+import { ArrowBigRightIcon } from "lucide-react";
 import { saveToRedis } from "~/app/actions/saveToRedis";
 
 export function BudgetSetter({ defaultBudget }: { defaultBudget: number }) {
@@ -16,7 +16,7 @@ export function BudgetSetter({ defaultBudget }: { defaultBudget: number }) {
   return (
     <>
       <div className="mt-4 flex flex-col gap-2">
-        <span>Do you want to set a day budget?</span>
+        <span className="text-center">Do you want to set a day budget?</span>
         <RadioGroup
           value={hasBudget ? "SET_BUDGET" : "NO_BUDGET"}
           className="mt-4 flex flex-row gap-8"
@@ -73,7 +73,7 @@ export function BudgetSetter({ defaultBudget }: { defaultBudget: number }) {
         }}
       >
         <span className="text-lg uppercase">Next</span>
-        <ChevronRightIcon className="h-5 w-5" />
+        <ArrowBigRightIcon className="h-5 w-5" />
       </Button>
     </>
   );
