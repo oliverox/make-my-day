@@ -2,11 +2,12 @@ import { Redis } from "@upstash/redis";
 import { auth } from '@clerk/nextjs/server';
 import { GroupSizePicker } from './groupSizePicker';
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
+import { redirect } from 'next/navigation';
 
 export default async function GroupPage() {
   const { userId } = auth();
   if (!userId) {
-    return null;
+    return redirect('/');
   }
   const redis = Redis.fromEnv();
   const defaultGroupSize:string = (await redis.hget(`mmd.${userId}`, 'groupSize'))!;

@@ -2,7 +2,7 @@ import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export function Navbar() {
   return (
-    <div className="absolute right-0 top-2 px-2 text-right">
+    <div className="absolute right-0 top-4 px-4 text-right">
       <SignedIn>
         <UserButton />
       </SignedIn>

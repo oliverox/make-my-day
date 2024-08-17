@@ -8,13 +8,9 @@ import { Button } from "~/components/ui/button";
 import { ChevronRightIcon } from "lucide-react";
 import { saveToRedis } from "~/app/actions/saveToRedis";
 
-export function BudgetSetter({ defaultBudget }: { defaultBudget: string }) {
-  const [hasBudget, setHasBudget] = useState(
-    !isNaN(parseInt(defaultBudget)) && defaultBudget != "0",
-  );
-  const [budget, setBudget] = useState(
-    isNaN(parseInt(defaultBudget)) ? 0 : parseInt(defaultBudget),
-  );
+export function BudgetSetter({ defaultBudget }: { defaultBudget: number }) {
+  const [hasBudget, setHasBudget] = useState(defaultBudget !== 0);
+  const [budget, setBudget] = useState(defaultBudget);
   const [redirecting, setRedirecting] = useState(false);
 
   return (

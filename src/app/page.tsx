@@ -30,16 +30,16 @@ export default function Home() {
         <Button
           size="lg"
           asChild
-          className="mt-6 h-12 w-full max-w-[300px] text-lg uppercase"
+          className="mt-6 w-full text-lg uppercase"
         >
-          <SignInButton>Get started</SignInButton>
+          <SignInButton>Sign In</SignInButton>
         </Button>
       </SignedOut>
 
       <SignedIn>
-        <Button size="lg" asChild className="mt-6 h-12 w-full">
+        <Button size="lg" asChild className="mt-6 w-full">
           <Link href="/start">
-            <span className="text-lg font-semibold uppercase">Get Started</span>
+            <span className="text-lg uppercase">Get Started</span>
             <ChevronRightIcon className="h-6 w-6" />
           </Link>
         </Button>

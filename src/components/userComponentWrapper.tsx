@@ -13,27 +13,27 @@ export async function UserComponentWrapper({
   const user = await currentUser();
   if (!user) {
     return (
-      <div className="flex min-h-screen flex-col gap-3 pb-4 pt-16">
-        <span className={`text-center text-6xl ${titleFont.className}`}>
+      <div className="flex min-h-screen flex-col gap-2 py-4">
+        <span className={`text-center text-5xl ${titleFont.className}`}>
           Welcome!
         </span>
-        <span className="text-center text-xl italic">
+        <span className="text-center text-lg italic">
           Let&apos;s make your day!
         </span>
-        <Separator className="mt-4 bg-slate-500" />
+        <Separator className="mt-4 bg-primary" />
         {children}
       </div>
     );
   }
   return (
-    <div className="flex min-h-screen flex-col gap-3 pb-4 pt-16">
-      <span className={`text-center text-6xl ${titleFont.className}`}>
+    <div className="flex min-h-screen flex-col gap-2 py-4">
+      <span className={`text-center text-5xl ${titleFont.className}`}>
         Hey {user.firstName}
       </span>
-      <span className="text-center text-xl italic">
+      <span className="text-center text-lg italic">
         Let&apos;s make your day!
       </span>
-      <Separator className="mt-4 bg-slate-500" />
+      <Separator className="mt-4 bg-primary" />
       {children}
     </div>
   );

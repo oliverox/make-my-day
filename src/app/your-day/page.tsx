@@ -2,9 +2,13 @@ import { Redis } from "@upstash/redis";
 import { Itinerary } from "./itinerary";
 import { auth } from "@clerk/nextjs/server";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
+import { redirect } from 'next/navigation';
 
 export default async function YourDayPage() {
   const { userId } = auth();
+  if (!userId) {
+    return redirect('/')
+  }
   const redis = Redis.fromEnv();
   const selectedDate: string = (await redis.hget(
     `mmd.${userId}`,
