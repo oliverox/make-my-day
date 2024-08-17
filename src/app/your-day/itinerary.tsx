@@ -32,11 +32,15 @@ export function Itinerary({
   startTime,
   endTime,
   groupSize,
+  region,
+  activities
 }: {
-  date: string;
-  startTime: string;
-  endTime: string;
-  groupSize: string;
+  date: string | null;
+  startTime: string | null;
+  endTime: string | null;
+  groupSize: string | null;
+  region: string | null;
+  activities: string[] | null;
 }) {
   const [itinerary, setItinerary] = useState<string | undefined>();
   const [streaming, setStreaming] = useState(false);
@@ -54,6 +58,8 @@ export function Itinerary({
               startTime,
               endTime,
               groupSize,
+              region,
+              activities
             });
             for await (const partialObject of readStreamableValue<
               z.infer<typeof ItinerarySchema>

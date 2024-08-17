@@ -91,7 +91,7 @@ export function DayPicker({
             await saveToRedis({
               field: "selectedDate",
               value: selectedDate.toDateString(),
-              redirectUrl: "/group-size",
+              redirectUrl: "/region",
             });
           }}
         >

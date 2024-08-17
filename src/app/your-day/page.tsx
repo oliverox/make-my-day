@@ -2,24 +2,37 @@ import { Redis } from "@upstash/redis";
 import { Itinerary } from "./itinerary";
 import { auth } from "@clerk/nextjs/server";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 export default async function YourDayPage() {
   const { userId } = auth();
   if (!userId) {
-    return redirect('/')
+    return redirect("/");
   }
   const redis = Redis.fromEnv();
-  const selectedDate: string = (await redis.hget(
-    `mmd.${userId}`,
+  const redisKey = `mmd.${userId}`;
+  const getSelectedDate: Promise<string | null> = redis.hget(
+    redisKey,
     "selectedDate",
-  ))!;
-  const startEndTime: string = (await redis.hget(
-    `mmd.${userId}`,
+  );
+  const getStartEndTime: Promise<string | null> = redis.hget(
+    redisKey,
     "startEndTime",
-  ))!;
-  const groupSize: string = (await redis.hget(`mmd.${userId}`, "groupSize"))!;
-  const [startTime, endTime] = startEndTime.split("_");
+  );
+  const getRegion: Promise<string | null> = redis.hget(redisKey, "region");
+  const getGroupSize: Promise<string | null> = redis.hget(
+    redisKey,
+    "groupSize",
+  );
+  const [selectedDate, startEndTime, region, groupSize] = await Promise.all([
+    getSelectedDate,
+    getStartEndTime,
+    getRegion,
+    getGroupSize,
+  ]);
+  const [startTime, endTime] = startEndTime
+    ? startEndTime.split("_")
+    : ["09:00", "21:00"];
 
   return (
     <UserComponentWrapper>
@@ -28,6 +41,8 @@ export default async function YourDayPage() {
         startTime={startTime!}
         endTime={endTime!}
         groupSize={groupSize}
+        region={region}
+        activities={null}
       />
     </UserComponentWrapper>
   );
