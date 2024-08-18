@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import { ArrowBigRightIcon } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
 import { saveToRedis } from "~/app/actions/saveToRedis";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 
@@ -62,7 +62,7 @@ export function RegionPicker({
           }}
         >
           <span className="text-lg uppercase">Next</span>
-          <ArrowBigRightIcon className="h-5 w-5" />
+          <ChevronRightIcon className="h-5 w-5" />
         </Button>
       )}
     </div>

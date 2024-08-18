@@ -3,10 +3,9 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
-import { ArrowBigLeftIcon, ArrowBigRightIcon } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
 import { Slider } from "~/components/ui/slider";
 import { saveToRedis } from "~/app/actions/saveToRedis";
-import Link from "next/link";
 
 export function DayPicker({
   selectedDateFromRedis,
@@ -102,7 +101,7 @@ export function DayPicker({
             <span className="text-lg uppercase">
               {dayjs(selectedDate).format("ddd D MMM")}
             </span>
-            <ArrowBigRightIcon className="h-5 w-5" />
+            <ChevronRightIcon className="h-5 w-5" />
           </Button>
         </div>
       )}

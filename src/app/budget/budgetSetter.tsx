@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
-import { ArrowBigRightIcon } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
 import { saveToRedis } from "~/app/actions/saveToRedis";
 
 export function BudgetSetter({ defaultBudget }: { defaultBudget: number }) {
@@ -73,7 +73,7 @@ export function BudgetSetter({ defaultBudget }: { defaultBudget: number }) {
         }}
       >
         <span className="text-lg uppercase">Next</span>
-        <ArrowBigRightIcon className="h-5 w-5" />
+        <ChevronRightIcon className="h-5 w-5" />
       </Button>
     </>
   );
