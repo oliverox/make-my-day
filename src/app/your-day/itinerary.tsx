@@ -44,7 +44,7 @@ export function Itinerary({
   endTime: string | null;
   groupSize: string | null;
   region: string | null;
-  activities: string[] | null;
+  activities: string | null;
   budget: string | null;
 }) {
   const [itinerary, setItinerary] = useState<string | undefined>();

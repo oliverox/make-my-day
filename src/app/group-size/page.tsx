@@ -4,7 +4,7 @@ import { GroupSizePicker } from './groupSizePicker';
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 import { redirect } from 'next/navigation';
 
-export default async function GroupPage() {
+export default async function GroupSizePage() {
   const { userId } = auth();
   if (!userId) {
     return redirect('/');

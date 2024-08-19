@@ -4,7 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Inter as FontSans } from "next/font/google";
 import { type Metadata } from "next";
 import { clsx } from "clsx";
-import { version } from "~/../package.json";
+import pkgJson from "~/../package.json";
 
 import { Navbar } from "~/components/navbar";
 
@@ -33,9 +33,9 @@ export default function RootLayout({
             <div className="relative w-full max-w-md border-x bg-gradient-to-b from-[#f3fab3] to-[#a6def2] px-4">
               <Navbar />
               {children}
-              <div className="text-right">
+              <div className="text-center">
                 <span className="text-[10px] text-muted-foreground">
-                  &copy; {new Date().getFullYear()} Cardcity LLP [{version}]
+                  &copy; {new Date().getFullYear()} Cardcity LLP ({pkgJson.version})
                 </span>
               </div>
             </div>

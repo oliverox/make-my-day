@@ -92,7 +92,7 @@ export function GroupSizePicker({
             await saveToRedis({
               field: "groupSize",
               value: `${numAdults}_${numKids}`,
-              redirectUrl: "/budget",
+              redirectUrl: "/activities",
             });
           }}
         >

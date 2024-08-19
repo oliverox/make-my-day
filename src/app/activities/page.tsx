@@ -1,19 +1,16 @@
-import { Redis } from "@upstash/redis";
 import { auth } from '@clerk/nextjs/server';
-import { RegionPicker } from "./regionPicker";
+import { ActivitiesPicker } from "./activitiesPicker";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 import { redirect } from 'next/navigation';
 
-export default async function RegionPage() {
+export default async function ActivitiesPage() {
   const { userId } = auth();
   if (!userId) {
     return redirect('/')
   }
-  const redis = Redis.fromEnv();
-  const region:string = (await redis.hget(`mmd.${userId}`, 'region'))!;
   return (
     <UserComponentWrapper>
-      <RegionPicker defaultRegionFromRedis={region} />
+      <ActivitiesPicker />
     </UserComponentWrapper>
   );
 }
