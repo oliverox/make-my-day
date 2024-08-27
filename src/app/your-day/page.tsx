@@ -46,7 +46,7 @@ export default function Page() {
     const { object } = await getItinerary();
     for await (const partialObject of readStreamableValue<
       z.infer<typeof ItinerarySchema>
-      // @ts-expect-error
+      // @ts-expect-error Not sure why there is a type mismatch here
     >(object)) {
       if (partialObject) {
         console.log("current messages[]=", messages);
