@@ -19,3 +19,5 @@
 - [x] Switch to React Server Actions
 - [ ] Integrate payment using Stripe
 - [ ] Create user record upon new sign up
+- [ ] Ability to swap individual recommendations
+- [ ] Add "tools" to improve AI recommendations like sunrise / sunset times.
