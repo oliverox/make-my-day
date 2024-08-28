@@ -19,9 +19,12 @@ export type ClientMessage = {
 
 export async function updateItinerary({ id }: {id: string}) {
   "use server";
+  const stream = createStreamableValue();
   const history = getMutableAIState<typeof AI>();
   const system =
-    "You are a master day planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with no additional description or context.";
+    "You are a master day planner specialized in Mauritius. You come up with creative, fun, unique and exciting activities " +
+    "based on the requirements of the user. You output the detailed itinerary in JSON format. You return only the JSON with "
+    "no additional description or context.";
 
   console.log("history=", history.get());
 
@@ -34,24 +37,46 @@ export async function updateItinerary({ id }: {id: string}) {
     },
   ]);
 
-  const response = await generateObject({
-    model: openai.chat("gpt-4o"),
-    system,
-    messages: history.get(),
-    schema: ActivitySchema,
-  });
+  // const response = await generateObject({
+  //   model: openai.chat("gpt-4o"),
+  //   system,
+  //   messages: history.get(),
+  //   schema: ActivitySchema,
+  // });
+  
+  let response = '';
+  void (async () => {
+    const { partialObjectStream } = await streamObject({
+      model: openai.chat("gpt-4o"),
+      system,
+      messages: history.get(),
+      schema: ActivitySchema,
+    });
 
-  console.log("response.object=", response.object);
+    for await (const partialObject of partialObjectStream) {
+      if (partialObject) {
+        stream.update(partialObject);
+        response = JSON.stringify(partialObject);
+      }
+    }
+    stream.done(0);
+    history.done([...history.get(), { role: "assistant", content: response }]);
+    console.log("new history=", history.get());
+  })();
 
-  // Update the AI state again with the response from the model.
-  history.done([
-    ...history.get(),
-    { role: "assistant", content: JSON.stringify(response.object) },
-  ]);
+  console.log("updateItinerary response=", response);
+  return { object: stream.value };
 
-  console.log("new history=", history.get());
 
-  return response.object;
+  // // Update the AI state again with the response from the model.
+  // history.done([
+  //   ...history.get(),
+  //   { role: "assistant", content: JSON.stringify(response.object) },
+  // ]);
+
+  // console.log("new history=", history.get());
+
+  // return response.object;
 }
 
 export async function getItinerary() {
@@ -136,6 +161,7 @@ export async function getItinerary() {
   console.log("history=", history.get());
 
   let response = "";
+
   void (async () => {
     const { partialObjectStream } = await streamObject({
       model: openai.chat("gpt-4o"),

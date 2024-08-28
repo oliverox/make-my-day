@@ -35,7 +35,7 @@ export default function Page() {
       id,
     }: {
       id: string;
-    }) => Promise<z.infer<typeof ActivitySchema>>;
+    }) => Promise<{ object: z.infer<typeof ActivitySchema>}>;
   };
   const [isStreaming, setStreaming] = useState(false);
   const [messages, setMessages] = useUIState<typeof AI>();
@@ -67,33 +67,38 @@ export default function Page() {
   };
 
   const handleUpdateItinerary = async ({ id }: { id: string }) => {
-    const updatedItem = await updateItinerary({ id });
-    console.log("updated:", JSON.stringify(updatedItem));
-    console.log("current messages=", messages);
-    const newItems = [];
-    for (const item of items) {
-      if (item.id === updatedItem.id) {
-        console.log("updating item id", item.id);
-        newItems.push(updatedItem);
+
+    const { object } = await updateItinerary({ id });
+    for await (const updatedItem of readStreamableValue<
+      z.infer<typeof ActivitySchema>
+      // @ts-expect-error Not sure why there is a type mismatch here
+    >(object)) {
+      if (updatedItem) {
+        console.log("current messages[]=", messages);
+        console.log("setting messages[]:", updatedItem);
+        const allMessages = [...messages];
+        allMessages[allMessages.length > 0 ? allMessages.length - 1 : 0] = {
+          id: Date.now().toString(),
+          role: "assistant",
+          display: JSON.stringify(updatedItem),
+        };
+        console.log("updatedItem=", updatedItem);
+        const newItems = [];
+        for (const item of items) {
+          if (item.id === updatedItem.id) {
+            console.log("updating item id", item.id);
+            newItems.push(updatedItem);
+          } else {
+            newItems.push(item);
+          }
+        }
+        console.log("newItems=", newItems);
+        setItems(newItems);    
+        setMessages(allMessages);
       } else {
-        newItems.push(item);
+        setStreaming(false);
       }
     }
-    console.log("newItems=", newItems);
-    setItems(newItems);
-    console.log("setting messages...", {
-      id: Date.now().toString(),
-      role: "assistant",
-      display: JSON.stringify(newItems),
-    });
-    setMessages([
-      ...messages,
-      {
-        id: Date.now().toString(),
-        role: "assistant",
-        display: JSON.stringify(newItems),
-      },
-    ]);
   };
 
   return (
@@ -164,12 +169,26 @@ export default function Page() {
         </div>
       )}
       {!isStreaming && items.length === 0 && (
-        <Button className="uppercase" onClick={handleGetItinerary}>
-          Make My Day
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button className="uppercase gap-1" onClick={handleGetItinerary}>
+            <HeartIcon className="h-5 w-5" />
+            Make My Day
+          </Button>
+          <Button
+            asChild
+            size="lg"
+            variant="secondary"
+            className="w-full items-center gap-1 uppercase"
+          >
+            <Link href="/">
+              <HouseIcon className="h-5 w-5" />
+              Start Over
+            </Link>
+          </Button>
+        </div>
       )}
       {!isStreaming && items.length > 0 && (
-        <div className="flex w-full flex-col gap-2">
+        <div className="flex w-full flex-col gap-1">
           <Button size="lg" className="w-full items-center gap-2 uppercase">
             <MailIcon className="h-5 w-5" />
             Email Itinerary
@@ -179,11 +198,11 @@ export default function Page() {
             asChild
             size="lg"
             variant="secondary"
-            className="w-full items-center gap-2 uppercase"
+            className="w-full items-center gap-1 uppercase"
           >
             <Link href="/">
               <HouseIcon className="h-5 w-5" />
-              Back to Home
+              Start Over
             </Link>
           </Button>
         </div>
