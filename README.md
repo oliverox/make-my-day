@@ -8,6 +8,7 @@
 - [x] Switch to React Server Actions
 - [x] Ability to swap individual recommendations
 - [x] Ability to update and stream individual recommendations
+- [x] Ability to pick country between Mauritius and Singapore
 - [-] Customize prompt according to user choices
 - [-] Add authentication with Clerk
 - [ ] Add more day customizations
@@ -22,3 +23,4 @@
 - [ ] Integrate payment using Stripe
 - [ ] Create user record upon new sign up
 - [ ] Add "tools" to improve AI recommendations like sunrise / sunset times.
+- [ ] Disable buttons right upon clicked event

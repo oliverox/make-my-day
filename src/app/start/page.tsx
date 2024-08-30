@@ -1,22 +1,59 @@
+import Link from "next/link";
 import { Redis } from "@upstash/redis";
-import { auth } from '@clerk/nextjs/server';
-import { DayPicker } from "./dayPicker";
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
+import { Button } from "~/components/ui/button";
+import { CountryPicker } from "./countryPicker";
+import { saveToRedis } from "~/app/actions/saveToRedis";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
-import { redirect } from 'next/navigation';
+
+const MenuButton = ({
+  text,
+  url,
+}: {
+  text: string;
+  url: string;
+}) => {
+  return (
+    <Button
+      asChild
+      className="flex h-24 items-center justify-center uppercase"
+    >
+      <Link href={url}>
+        <span className="font-bold">{text}</span>
+      </Link>
+    </Button>
+  );
+};
 
 export default async function StartPage() {
   const { userId } = auth();
   if (!userId) {
-    return redirect('/')
+    return redirect("/");
   }
   const redis = Redis.fromEnv();
-  let selectedDate:Date = (await redis.hget(`mmd.${userId}`, 'selectedDate'))!;
-  if (!selectedDate) {
-    selectedDate = new Date();
+  let country: string = (await redis.hget(`mmd.${userId}`, "country"))!;
+  if (!country) {
+    country = "Mauritius";
+    await saveToRedis({
+      field: "country",
+      value: country,
+    });
   }
+
   return (
     <UserComponentWrapper>
-      <DayPicker selectedDateFromRedis={selectedDate} />
+      <div className="mt-4 flex flex-col gap-5">
+        <div className="flex flex-col gap-2">
+          <CountryPicker defaultCountry={country} />
+          <div className="grid grid-cols-2 gap-4">
+            <MenuButton text="Full Day Plan" url="/calendar" />
+            <MenuButton text="Flash Ideas" url="/calendar" />
+            {/* <MenuButton text="Day Planning" url="/calendar" />
+            <MenuButton text="Day Planning" url="/calendar" /> */}
+          </div>
+        </div>
+      </div>
     </UserComponentWrapper>
   );
 }
