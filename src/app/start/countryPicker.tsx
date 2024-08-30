@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { MapPinIcon } from 'lucide-react';
 import { saveToRedis } from "~/app/actions/saveToRedis";
 
 export function CountryPicker({ defaultCountry }: { defaultCountry: string }) {
@@ -21,11 +22,12 @@ export function CountryPicker({ defaultCountry }: { defaultCountry: string }) {
     });
   }, [country]);
   return (
-    <div className="flex flex-row items-center justify-center gap-1 pb-4 text-lg">
+    <div className="flex flex-row items-center justify-center gap-2 pb-4 text-lg">
       <span className="text-center">I am visiting</span>
       <DropdownMenu>
-        <DropdownMenuTrigger className="outline-none">
+        <DropdownMenuTrigger className="outline-none flex flex-row gap-1 items-center">
           <span className="underline underline-offset-8 decoration-dotted">{country}</span>
+          <MapPinIcon className="w-5 h-5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Which country are you visiting?</DropdownMenuLabel>

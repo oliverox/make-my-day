@@ -49,6 +49,8 @@ export default async function StartPage() {
           <div className="grid grid-cols-2 gap-4">
             <MenuButton text="Full Day Plan" url="/calendar" />
             <MenuButton text="Flash Ideas" url="/calendar" />
+            <span className="text-xs text-center">Create a personalized full-day itinerary tailored to your preferences.</span>
+            <span className="text-xs text-center">Get instant recommendations for different occasions.</span>
             {/* <MenuButton text="Day Planning" url="/calendar" />
             <MenuButton text="Day Planning" url="/calendar" /> */}
           </div>

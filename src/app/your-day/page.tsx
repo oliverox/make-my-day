@@ -192,7 +192,7 @@ export default function Page() {
             variant="secondary"
             className="w-full items-center gap-1 uppercase"
           >
-            <Link href="/">
+            <Link href="/start">
               <HouseIcon className="h-5 w-5" />
               Start Over
             </Link>
