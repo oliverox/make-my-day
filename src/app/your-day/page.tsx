@@ -16,6 +16,7 @@ import {
   MapPinIcon,
   UtensilsIcon,
   SparklesIcon,
+  ArrowLeftIcon,
   RefreshCwIcon,
   DollarSignIcon,
   LoaderPinwheelIcon,
@@ -35,7 +36,7 @@ export default function Page() {
       id,
     }: {
       id: string;
-    }) => Promise<{ object: z.infer<typeof ActivitySchema>}>;
+    }) => Promise<{ object: z.infer<typeof ActivitySchema> }>;
   };
   const [isStreaming, setStreaming] = useState(false);
   const [messages, setMessages] = useUIState<typeof AI>();
@@ -67,7 +68,6 @@ export default function Page() {
   };
 
   const handleUpdateItinerary = async ({ id }: { id: string }) => {
-
     const { object } = await updateItinerary({ id });
     for await (const updatedItem of readStreamableValue<
       z.infer<typeof ActivitySchema>
@@ -93,7 +93,7 @@ export default function Page() {
           }
         }
         console.log("newItems=", newItems);
-        setItems(newItems);    
+        setItems(newItems);
         setMessages(allMessages);
       } else {
         setStreaming(false);
@@ -170,9 +170,21 @@ export default function Page() {
       )}
       {!isStreaming && items.length === 0 && (
         <div className="flex flex-col gap-2">
-          <Button className="uppercase gap-1" onClick={handleGetItinerary}>
+          <p className="text-sm text-center py-4">Tap on <span className="font-semibold">Make My Day</span> button below to generate your itinerary.</p>
+          <Button className="gap-1 uppercase" onClick={handleGetItinerary}>
             <HeartIcon className="h-5 w-5" />
             Make My Day
+          </Button>
+          <Button
+            asChild
+            size="lg"
+            variant="secondary"
+            className="w-full items-center gap-1 uppercase"
+          >
+            <Link href="/activities">
+              <ArrowLeftIcon className="h-5 w-5" />
+              Back
+            </Link>
           </Button>
           <Button
             asChild

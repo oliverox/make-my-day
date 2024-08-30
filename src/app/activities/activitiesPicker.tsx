@@ -1,10 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from '~/components/ui/button';
+import { Button } from "~/components/ui/button";
 import { saveToRedis } from "~/app/actions/saveToRedis";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
-import { ShellIcon, UtensilsIcon, MartiniIcon, CoffeeIcon, ChevronRightIcon } from "lucide-react";
+import {
+  ShellIcon,
+  UtensilsIcon,
+  MartiniIcon,
+  CoffeeIcon,
+  ChevronRightIcon,
+} from "lucide-react";
 
 export function ActivitiesPicker() {
   const [activities, setActivities] = useState<string[]>([]);
@@ -58,7 +64,6 @@ export function ActivitiesPicker() {
             <span className="text-xs">Coffee</span>
           </ToggleGroupItem>
         </ToggleGroup>
-        {activities && activities.length > 0 && (
         <Button
           disabled={redirecting}
           className="mt-2"
@@ -66,7 +71,7 @@ export function ActivitiesPicker() {
             setRedirecting(true);
             await saveToRedis({
               field: "activities",
-              value: activities.join('_'),
+              value: activities.join("_"),
               redirectUrl: "/budget",
             });
           }}
@@ -74,7 +79,6 @@ export function ActivitiesPicker() {
           <span className="text-lg uppercase">Next</span>
           <ChevronRightIcon className="h-5 w-5" />
         </Button>
-      )}
       </div>
     </div>
   );
