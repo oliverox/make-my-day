@@ -22,9 +22,7 @@ export default function Home() {
         Make My Day
       </h1>
       <span className="text-lg">
-        Your personalized, AI-crafted, daily
-        <br />
-        adventures in Mauritius.
+        Your personalized, AI-crafted, daily adventures.
       </span>
       <SignedOut>
         <Button
