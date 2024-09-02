@@ -41,7 +41,7 @@ export function ActivitiesPicker() {
           <ActivityButton label="pub" icon={null} />
           <ActivityButton label="coffee" icon={null} />
           <ActivityButton label="fine dining" icon={null} />
-          <ActivityButton label="kids" icon={null} />
+          <ActivityButton label="kids-friendly" icon={null} />
           <ActivityButton label="biking" icon={null} />
           <ActivityButton label="hiking" icon={null} />
           <ActivityButton label="snorkeling" icon={null} />

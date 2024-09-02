@@ -20,7 +20,7 @@ export default async function ActivitiesPage() {
         variant="secondary"
         className="w-full items-center gap-1 uppercase"
       >
-        <Link href="/group-size">
+        <Link href="/start">
           <ArrowLeftIcon className="h-5 w-5" />
           Back
         </Link>

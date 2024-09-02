@@ -56,17 +56,6 @@ export default function Page() {
         };
         console.log("recommendation=", recommendation);
         setItems([recommendation]);
-        // const newItems = [];
-        // for (const item of items) {
-        //   if (item.id === recommendation.id) {
-        //     console.log("updating item id", item.id);
-        //     newItems.push(recommendation);
-        //   } else {
-        //     newItems.push(item);
-        //   }
-        // }
-        // console.log("newItems=", newItems);
-        // setItems(newItems);
         setMessages(allMessages);
       } else {
         setStreaming(false);
@@ -124,12 +113,9 @@ export default function Page() {
             <Button
               variant="ghost"
               size="icon"
-              // onClick={() => handleGetRecommendation({ id: item.id })}
+              onClick={() => handleGetRecommendation()}
             >
               <RefreshCwIcon className="h-4 w-4 text-muted-foreground" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <HeartIcon className="h-4 w-4 text-muted-foreground" />
             </Button>
           </CardFooter>
         </Card>

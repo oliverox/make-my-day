@@ -40,7 +40,7 @@ export async function getRecommendation() {
     ...history.get(),
     {
       role: "user",
-      content: `Recommend a ${activity} activity. Only return the newly updated recommendation in JSON.`,
+      content: `Recommend a new ${activity} activity. Only return the newly updated recommendation in JSON.`,
     },
   ]);
 
