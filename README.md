@@ -11,12 +11,18 @@
 - [x] Ability to pick country between Mauritius and Singapore
 - [-] Customize prompt according to user choices
 - [-] Add authentication with Clerk
+  - [ ] User profile page
+        - [ ] Saved itinaries
+        - [ ] Saved recommendations
+        - [ ] Credits
 - [ ] Add more day customizations
-  - [ ] Quick picks (What to eat tonight? Great coffee spots?)
+  - [x] Quick picks
   - [ ] Food type
-  - [ ] Surprise me
-  - [ ] Nightlife
+  - [ ] Sunrise / Sunset
+  - [x] Surprise me
+  - [x] Nightlife
   - [ ] Region
+  - [ ] What to eat tonight? Great coffee spots?
 - [ ] Integrate analytics with Posthog
 - [ ] Error management with Sentry
 - [ ] Integrate Resend to send final itinerary by email

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ActivitySchema = z.object({
   id: z.string().describe("A uniquely identifiable string for this item"),
+  name: z.string().optional(),
   location: z
     .string()
     .describe("The string location of the recommendation if any"),

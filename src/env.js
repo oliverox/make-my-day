@@ -24,6 +24,8 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     BASE_URL: z.string().url(),
+    PLACES_API_KEY: z.string(),
+    PLACES_API_URL: z.string().url()
   },
 
   /**
@@ -32,7 +34,6 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
   },
 
@@ -56,9 +57,10 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    PLACES_API_KEY: process.env.PLACES_API_KEY,
+    PLACES_API_URL: process.env.PLACES_API_URL,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
