@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { ChevronRightIcon } from "lucide-react";
-import { saveToRedis } from "~/app/actions/saveToRedis";
+import { saveToRedis } from "~/app/_actions/saveToRedis";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 
 export function GroupSizePicker({

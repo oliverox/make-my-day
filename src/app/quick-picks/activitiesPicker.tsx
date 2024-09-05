@@ -2,7 +2,7 @@
 
 import { type ReactElement } from "react";
 import { Button } from "~/components/ui/button";
-import { saveToRedis } from "~/app/actions/saveToRedis";
+import { saveToRedis } from "~/app/_actions/saveToRedis";
 
 const ActivityButton = ({
   label,

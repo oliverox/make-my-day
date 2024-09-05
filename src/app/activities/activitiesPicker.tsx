@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import { saveToRedis } from "~/app/actions/saveToRedis";
+import { saveToRedis } from "~/app/_actions/saveToRedis";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 import {
   ShellIcon,

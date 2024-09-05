@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { Button } from "~/components/ui/button";
 import { CountryPicker } from "./countryPicker";
-import { saveToRedis } from "~/app/actions/saveToRedis";
+import { saveToRedis } from "~/app/_actions/saveToRedis";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 const MenuButton = ({

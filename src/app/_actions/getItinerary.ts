@@ -3,7 +3,7 @@ import { Redis } from "@upstash/redis";
 import { openai } from "@ai-sdk/openai";
 import { auth } from "@clerk/nextjs/server";
 import type { AI } from './serverActions';
-import { ItinerarySchema } from "~/app/definitions/schemas";
+import { ItinerarySchema } from "~/app/_definitions/schemas";
 import { getMutableAIState, createStreamableValue } from "ai/rsc";
 
 export async function getItinerary() {

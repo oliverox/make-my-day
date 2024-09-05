@@ -6,7 +6,7 @@ import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { ChevronRightIcon } from "lucide-react";
-import { saveToRedis } from "~/app/actions/saveToRedis";
+import { saveToRedis } from "~/app/_actions/saveToRedis";
 
 export function BudgetSetter({ defaultBudget }: { defaultBudget: number }) {
   const [hasBudget, setHasBudget] = useState(defaultBudget !== 0);

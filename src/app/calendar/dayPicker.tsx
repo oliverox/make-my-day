@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
 import { ChevronRightIcon } from "lucide-react";
 import { Slider } from "~/components/ui/slider";
-import { saveToRedis } from "~/app/actions/saveToRedis";
+import { saveToRedis } from "~/app/_actions/saveToRedis";
 
 export function DayPicker({
   selectedDateFromRedis,

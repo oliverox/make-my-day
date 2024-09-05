@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { AI } from "~/app/actions/serverActions";
+import { AI } from "~/app/_actions/serverActions";
 import { UserComponentWrapper } from "~/components/userComponentWrapper";
 
 export default function RootLayout({

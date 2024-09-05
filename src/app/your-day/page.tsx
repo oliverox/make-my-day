@@ -25,9 +25,9 @@ import Link from "next/link";
 import type { z } from "zod";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import type { AI } from "~/app/actions/serverActions";
+import type { AI } from "~/app/_actions/serverActions";
 import { useActions, useUIState, readStreamableValue } from "ai/rsc";
-import type { ActivitySchema, ItinerarySchema } from "../definitions/schemas";
+import type { ActivitySchema, ItinerarySchema } from "../_definitions/schemas";
 
 export default function Page() {
   const { getItinerary, updateItinerary } = useActions() as {

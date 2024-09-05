@@ -25,8 +25,8 @@ import Link from "next/link";
 import type { z } from "zod";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import type { AI } from "~/app/actions/serverActions";
-import type { ActivitySchema } from "../definitions/schemas";
+import type { AI } from "~/app/_actions/serverActions";
+import type { ActivitySchema } from "~/app/_definitions/schemas";
 import { useActions, useUIState, readStreamableValue } from "ai/rsc";
 
 export default function Page() {

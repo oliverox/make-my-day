@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { MapPinIcon } from 'lucide-react';
-import { saveToRedis } from "~/app/actions/saveToRedis";
+import { saveToRedis } from "~/app/_actions/saveToRedis";
 
 export function CountryPicker({ defaultCountry }: { defaultCountry: string }) {
   const [country, setCountry] = useState(defaultCountry);
